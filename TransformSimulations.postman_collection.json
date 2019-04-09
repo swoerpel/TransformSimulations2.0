@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "cea98007-3f69-4ce9-bf8d-6b1fcdeb82e3",
+		"name": "TransformSimulations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/tour",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"tour2\",\n    \"points\": [\n        {\n            \"x\": 22,\n            \"y\": 42\n        },\n        {\n            \"x\": 73,\n            \"y\": 123\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tour",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tour/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour/5cabc6b2f1f27c37f45713a6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"5cabc6b2f1f27c37f45713a6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tour/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour/5cabcb70213a572aac88a140",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"5cabcb70213a572aac88a140"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
