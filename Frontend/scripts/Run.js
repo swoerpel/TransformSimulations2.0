@@ -17,8 +17,8 @@ function preload()
 
 function setup()
 {
-    seeds.push(JSON.parse(e.target.result))
-    parameters['seeds'] = seeds
+    // seeds.push(JSON.parse(e.target.result))
+    // parameters['seeds'] = seeds
     let T = new TransformController(parameters)
     T.SetupParameters()  
 
