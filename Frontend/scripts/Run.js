@@ -2,9 +2,6 @@ var seeds;
 var input, file, fr;
 function preload()
 {
-
-
-
     getUserAsync = async (name) =>
     {
         let response = await fetch(`http://localhost:3000/tour`);
@@ -20,7 +17,14 @@ function setup()
     // seeds.push(JSON.parse(e.target.result))
     // parameters['seeds'] = seeds
     let T = new TransformController(parameters)
-    T.SetupParameters()  
-
+    T.SetupSeedParameters()  
+    T.SetupTourSequence()
+    T.SetupGraphic()
+    T.SetupInitialConditions()
 }
 
+function draw()
+{
+
+    // console.log('chet')
+}

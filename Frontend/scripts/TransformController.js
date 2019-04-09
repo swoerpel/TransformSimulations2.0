@@ -5,15 +5,18 @@ class TransformController
     constructor(parameters)
     {
         this.parameters = parameters
-        this.SetupParameters = this.SetupParameters.bind(this)
+        this.SetupSeedParameters = this.SetupSeedParameters.bind(this)
         this.InitializeDisplayTours = this.InitializeDisplayTours.bind(this)
         this.InitializeBatchTours = this.InitializeBatchTours.bind(this)
         this.SetDisplaySeeds = this.SetDisplaySeeds.bind(this)
+        this.SetupGraphic = this.SetupGraphic.bind(this)
+        this.SetupInitialConditions = this.SetupInitialConditions.bind(this)
+
     }
 
 
     // loads all seeds to be used for a given tour
-    SetupParameters()
+    SetupSeedParameters()
     {
         
         console.log('All Parameters')
@@ -45,8 +48,28 @@ class TransformController
         }
     }
 
+    SetupGraphic()
+    {
+        this.graphic = createGraphics(this.parameters.GP.graphic_width,this.parameters.GP.graphic_height)
+        this.graphic.strokeWeight(this.parameters.GP.stroke_weight)
+        for(let i = 0; i < this.parameters.GP.tour_count; i++)
+            this.tours[i].SetGraphic(this.graphic)
+
+    }
+
+    // sets initial starting conditions of all tours
+    // zoom, shifting, origin, translate, etc
+    SetupInitialConditions()
+    {
+
+
+        // if()
+
+    }
+
 //===============================Display mode function calls====================================
     
+    //SetupSeedParameters 1
     //creates single group of tours for one graphic
     InitializeDisplayTours()
     {
@@ -54,7 +77,7 @@ class TransformController
         for(let i = 0; i < this.parameters.GP.tour_count; i++)
             this.tours.push(new Tour(i,this.parameters))
     }
-
+    //SetupSeedParameters 2
     SetDisplaySeeds()
     {
         for(let i = 0; i < this.parameters.GP.tour_count; i++)
@@ -69,6 +92,7 @@ class TransformController
 
 //===============================Batch mode function calls====================================
 
+    //SetupSeedParameters 1
     //creates array of groups of tours for batch saving
     InitializeBatchTours()
     {
@@ -81,7 +105,7 @@ class TransformController
             this.tour_groups.push(temp_tour_group)
         }
     }
-}
+};
 
 
 
