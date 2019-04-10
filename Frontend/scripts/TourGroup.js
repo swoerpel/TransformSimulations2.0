@@ -51,11 +51,7 @@ class TourGroup {
             if (this.parameters.CP.color_choice == 'random') {
                 for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                     let keys = Object.keys(colors);
-                    // let rand_color = colors[keys[Math.floor(keys.length * Math.random())]];
-                    // console.log(rand_color)
-
                     this.tours[i].SetFillColor(colors[keys[i % keys.length]])
-
                 }
             }
 
@@ -81,16 +77,29 @@ class TourGroup {
 
 
     SetupTourSeeds() {
+        let seed_parameters = {
+            transform_function_count: this.parameters.TGP.transform_function_count,
+            scale: this.parameters.TGP.scale,
+            precision: this.parameters.TGP.precision,
+            tolerance: this.parameters.TGP.tolerance
+        }
+        let seed_machine = new SeedGenerator(seed_parameters)
         if (this.parameters.TGP.seed_type == 'random') {
-            let seed_parameters = {
-                transform_function_count: this.parameters.TGP.transform_function_count,
-                scale: this.parameters.TGP.scale,
-                precision: this.parameters.TGP.precision
-            }
-            let seed_machine = new SeedGenerator(seed_parameters)
+
             for (let i = 0; i < this.parameters.TGP.tour_count; i++)
-                this.tours[i].SetSeedGroup(seed_machine.generate_random_simple_seed_group())
+                this.tours[i].SetSeed(seed_machine.generate_random_simple_seed())
             // this.tours.map((index,T)=>console.log(index,T.seed))
+        }
+        if (this.parameters.TGP.seed_type == 'variation') {
+            if (this.parameters.TGP.start_seed == 'random') {
+                let random_seed = seed_machine.generate_random_simple_seed()
+                let variation_matrix = seed_machine.generate_random_variation_matrix()
+                // let seed_group = seed_machine.generate_seed_variation_group(random_seed)
+
+                // offset array would be used ideally for variation steps per tour
+                // for (let i = 0; i < this.parameters.TGP.tour_count; i++)
+                // this.tours[i].SetSeed(seed_machine.generate_variation_seed(random_seed, variation_matrix, i))
+            }
         }
     }
 

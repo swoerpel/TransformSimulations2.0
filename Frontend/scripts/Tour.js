@@ -6,14 +6,14 @@ class Tour {
         this.parameters = parameters
         this.x = 0
         this.y = 0
-        this.SetSeedGroup = this.SetSeedGroup.bind(this)
+        // this.SetSeedGroup = this.SetSeedGroup.bind(this)
         this.SetGraphic = this.SetGraphic.bind(this)
         this.debug_draw_mode = true
     }
 
 
 
-    SetSeedGroup(seed_group) {
+    SetSeed(seed_group) {
         console.log('tour ', this.tour_index)
         console.log('seed ', seed_group)
         this.seed_group = seed_group
@@ -76,8 +76,6 @@ class Tour {
         }
         this.NextPoint()
         this.DrawPoint()
-
-
     }
 
     NextPoint() {
