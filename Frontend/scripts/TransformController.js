@@ -13,10 +13,14 @@ class TransformController
     {
         let tour_group = new TourGroup(this.parameters)
         tour_group.CreateTours()
-        tour_group.SetupTours()
+        tour_group.SetupTourOrigins()
+        tour_group.SetupTourSeeds()
+        tour_group.SetupTourColors()
         this.tour_groups.push(tour_group)
 
     }
+
+
 
     DrawTourGroup()
     {

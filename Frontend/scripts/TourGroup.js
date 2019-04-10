@@ -12,11 +12,8 @@ class TourGroup
     {
         this.graphic = createGraphics(parameters.GP.graphic_width,parameters.GP.graphic_height)
         this.graphic.background(0)
-        this.graphic.strokeWeight(10)
+        this.graphic.strokeWeight(this.parameters.TGP.stroke_weight)
         this.graphic.stroke(255)
-        
-
-
     }
 
     CreateTours()
@@ -30,38 +27,70 @@ class TourGroup
         }
     }
 
-    SetupTours()
+    SetupTourOrigins()
     {
-        for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+        console.log('graphic width', this.parameters.GP.graphic_width)
+        if(this.parameters.TGP.tour_placement == 'horizontal')
         {
-            let origin = {}
-
-
-            if(this.parameters.TGP.tour_placement == 'horizontal')
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
             {
-                let translate_x = i * (this.parameters.GP.graphic_width / this.parameters.TGP.tour_count) * this.parameters.GP.overlap_ratio
-                console.log(i, translate_x)
-                origin.x = translate_x
+                let origin = {}
+                let step_distance = (this.parameters.TGP.tour_width) * this.parameters.GP.overlap_ratio
+                origin.x = i * step_distance
                 origin.y = this.parameters.GP.graphic_height / 2
+                this.tours[i].SetOrigin(origin)
+            }
+            this.TranslateTourGroup()
+            
+        }
+        if(this.parameters.TGP.tour_placement == 'random')
+        {
+            
+        }
+    }
 
+    SetupTourColors()
+    {
+        if(this.parameters.CP.fill_type == 'constant')
+        {
+            if(this.parameters.CP.color_choice == 'random')
+            {
+                for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                {
+                    let keys = Object.keys(colors);
+                    // let rand_color = colors[keys[Math.floor(keys.length * Math.random())]];
+                    // console.log(rand_color)
+
+                    this.tours[i].SetFillColor(colors[keys[i]])
+                    
+                }
             }
 
-            // let origin = {
-                // x:
-                // y: this.parameters.TGP.tour_height / 2 + this.parameters.TGP.tour_placement_edge_buffer.y
-            // }
-
-            this.tours[i].SetOrigin(origin)
-
         }
-        this.TranslateTourGroup()
 
+    }
+
+
+    SetupTourSeeds()
+    {
+        if (this.parameters.TGP.seed_type == 'random')
+        {
+            let seed_parameters = {
+                transform_function_count : this.parameters.TGP.transform_function_count,
+                scale : this.parameters.TGP.scale,
+                precision : this.parameters.TGP.precision
+            }
+            let seed_machine = new SeedGenerator(seed_parameters)
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                this.tours[i].SetSeedGroup(seed_machine.generate_random_simple_seed_group())
+            // this.tours.map((index,T)=>console.log(index,T.seed))
+        }
     }
 
     TranslateTourGroup()
     {
         this.tour_group_width = (this.parameters.TGP.tour_count - 1) * this.parameters.TGP.tour_width * this.parameters.GP.overlap_ratio
-        this.translate_x = (this.parameters.GP.graphic_width / (this.parameters.TGP.tour_count)) / 2
+        this.translate_x = (this.parameters.GP.graphic_width - this.tour_group_width) / 2
         console.log('tour group width',this.tour_group_width)
         console.log('translate x',this.translate_x)
         this.graphic.translate(this.translate_x,0) 

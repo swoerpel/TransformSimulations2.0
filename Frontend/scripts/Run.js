@@ -1,5 +1,5 @@
 var T;
-
+var draw_count = 0;
 function preload()
 {
     getUserAsync = async (name) =>
@@ -13,6 +13,7 @@ function preload()
 
 function setup()
 {
+    pixelDensity(1) //prevents display issues when zooming on browser
     T = new TransformController(parameters)
 
     // one canvas with N tours
@@ -26,7 +27,8 @@ function draw()
 {
     for(let i = 0; i < parameters.GP.draw_count; i++)
         T.DrawTourGroup()
-    // console.log(T.GetGraphic())
     image(T.GetGraphic(),0, 0)
-    // console.log('chet')
+    draw_count++
+    // if (draw_count > 100)
+        // noLoop()
 }
