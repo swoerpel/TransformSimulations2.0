@@ -10,24 +10,40 @@ class Tour
         this.SetGraphic = this.SetGraphic.bind(this)
     }
 
+
+
     SetSeed(seed)
     {
         this.seed = seed
     }
 
+
+
     SetGraphic(graphic)
     {
         this.graphic = graphic
+        // this.graphic.translate(parameters.GP.)
+    }
+
+    SetOrigin(origin)
+    {
+        this.origin = origin
+        this.origin_translated = false
+
+    }
+
+    TranslateOrigin()
+    {
+        if(this.origin_translated)
+            this.graphic.translate(-this.origin.x, -this.origin.y)
+        else
+            this.graphic.translate(this.origin.x, this.origin.y)
+        this.origin_translated = !this.origin_translated
     }
 
     Draw()
     {
-        //move origin to determined start location
-        this.graphic.translate(this.x_translate, this.y_translate)
+        this.graphic.point(0,0)
 
-
-
-        //revert back to default origin so other tours can translate without fault
-        this.graphic.translate(-this.x_translate, -this.y_translate)
     }
 }

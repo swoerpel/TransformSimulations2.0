@@ -1,5 +1,5 @@
-var seeds;
-var input, file, fr;
+var T;
+
 function preload()
 {
     getUserAsync = async (name) =>
@@ -11,20 +11,22 @@ function preload()
 
 }
 
-
 function setup()
 {
-    // seeds.push(JSON.parse(e.target.result))
-    // parameters['seeds'] = seeds
-    let T = new TransformController(parameters)
-    T.SetupSeedParameters()  
-    T.SetupTourSequence()
-    T.SetupGraphic()
-    T.SetupInitialConditions()
+    T = new TransformController(parameters)
+
+    // one canvas with N tours
+    T.CreateTourGroup()
+    let canvas = createCanvas(parameters.GP.graphic_width, parameters.GP.graphic_height);
+    canvas.parent('display');
+    canvas.background(150);
 }
 
 function draw()
 {
-
+    for(let i = 0; i < parameters.GP.draw_count; i++)
+        T.DrawTourGroup()
+    // console.log(T.GetGraphic())
+    image(T.GetGraphic(),0, 0)
     // console.log('chet')
 }
