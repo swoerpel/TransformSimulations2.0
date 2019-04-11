@@ -6,7 +6,7 @@ class MatrixMachine
     {
         this.precision = 2
         this.transform_function_count = transform_function_count
-        this.create_single_column_variation = this.create_single_column_variation.bind(this)
+        // this.create_single_column_variation = this.create_single_column_variation.bind(this)
         this.linearize = this.linearize.bind(this)
         this.delinearize = this.delinearize.bind(this)
         this.offset = this.offset.bind(this)

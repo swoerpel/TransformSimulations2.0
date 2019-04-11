@@ -47,6 +47,9 @@ class TourGroup {
     }
 
     SetupTourColors() {
+        let chet = new ColorMachine()
+
+
         if (this.parameters.CP.fill_type == 'constant') {
             if (this.parameters.CP.color_choice == 'random') {
                 for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
@@ -94,11 +97,13 @@ class TourGroup {
             if (this.parameters.TGP.start_seed == 'random') {
                 let random_seed = seed_machine.generate_random_simple_seed()
                 let variation_matrix = seed_machine.generate_random_variation_matrix()
-                // let seed_group = seed_machine.generate_seed_variation_group(random_seed)
-
-                // offset array would be used ideally for variation steps per tour
-                // for (let i = 0; i < this.parameters.TGP.tour_count; i++)
-                // this.tours[i].SetSeed(seed_machine.generate_variation_seed(random_seed, variation_matrix, i))
+                console.log(variation_matrix)
+                console.log(random_seed)
+                let varied_seeds = []
+                for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                    varied_seeds.push(seed_machine.apply_variation_offset(random_seed,variation_matrix,i))
+                for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                    this.tours[i].SetSeed(varied_seeds[i])
             }
         }
     }
