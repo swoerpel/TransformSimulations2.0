@@ -13,10 +13,10 @@ var general_parameters = {
 }
 
 var tour_group_parameters = {
-    tour_count: 4, // how many tours on the graphic
+    tour_count: 12, // how many tours on the graphic
     tour_width: 1200,
     tour_height: 200,
-    tour_placement: 'horizontal', //'vertical', 'random'
+    tour_placement: 'random', //'vertical', 'random'
     tour_placement_edge_buffer: {
         x: general_parameters.graphic_width * .25,
         y: general_parameters.graphic_width * .25
@@ -26,7 +26,7 @@ var tour_group_parameters = {
     transform_function_count: 2, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
-    tolerance: 0.1, // how large values in variation matrix can be
+    tolerance: 0.01, // how large values in variation matrix can be
     zoom_type: 'linear', // random    default = 2,2,2,2,2
     zoom_upper_bound: 2,
     zoom_lower_bound: 2,

@@ -43,10 +43,15 @@ class SeedGenerator {
 
     generate_random_variation_matrix() {
         let variation_matrix = []
+        console.log(this.parameters.tolerance)
         for (let i = 0; i < this.parameters.transform_function_count; i++) {
             let random_seed_parameters = []
-            for (let i = 0; i < this.simple_seed_parameter_count; i++) {
-                random_seed_parameters.push((Math.random() < 0.5 ? -1 : 1) * parseFloat(Math.random(-this.parameters.tolerance, this.parameters.tolerance).toFixed(this.parameters.precision-4)))
+            for (let j = 0; j < this.simple_seed_parameter_count; j++) {
+                let rand = parseFloat((Math.random()*this.parameters.tolerance).toFixed(this.parameters.precision))
+                console.log('rand', rand)
+                let rand_value = (Math.random() < 0.5 ? -1 : 1) * rand
+                console.log(i,rand_value)
+                random_seed_parameters.push(rand_value)
             }
             variation_matrix.push(random_seed_parameters)
         }
