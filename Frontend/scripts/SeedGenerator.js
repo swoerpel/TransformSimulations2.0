@@ -27,30 +27,21 @@ class SeedGenerator {
 
     }
 
-    generate_variation_seed(seed, variation_matrix, scaler) {
-        // let variation_seed = []
-        // for (let i = 0; i < this.parameters.transform_function_count; i++) {
-        //     let variation_function_seed = []
-        //     for (let j = 0; j < this.simple_seed_parameter_count; j++) {
-        //         for(let k = 0; k < scaler; k++)
-        //             variation_function_seed
-        //             variation_function_seed.push(variation_matrix[i][j] + )
-        //     }
-        //     variation_seed.push(variation_function_seed)
-        // }
-        // return variation_seed
+    load_seed(seed_id) {
+        let seeds = {
+            'chet':[[-0.6466558, 0.12387177, -0.53947019, -0.69715325, 0.77943671, -0.79004337],
+                    [0.59591638, -0.0258686, -0.40476259, -0.62336581, -0.39510686, -0.13025707]],
+        }
+        return seeds[seed_id]
     }
 
     generate_random_variation_matrix() {
         let variation_matrix = []
-        console.log(this.parameters.tolerance)
         for (let i = 0; i < this.parameters.transform_function_count; i++) {
             let random_seed_parameters = []
             for (let j = 0; j < this.simple_seed_parameter_count; j++) {
                 let rand = parseFloat((Math.random()*this.parameters.tolerance).toFixed(this.parameters.precision))
-                console.log('rand', rand)
                 let rand_value = (Math.random() < 0.5 ? -1 : 1) * rand
-                console.log(i,rand_value)
                 random_seed_parameters.push(rand_value)
             }
             variation_matrix.push(random_seed_parameters)

@@ -14,7 +14,6 @@ class Tour {
 
 
     SetSeed(seed_group) {
-        console.log('tour ', this.tour_index)
         console.log('seed ', seed_group)
         this.seed_group = seed_group
         this.transform_functions = []

@@ -57,9 +57,7 @@ class TourGroup {
                     this.tours[i].SetFillColor(colors[keys[i % keys.length]])
                 }
             }
-
         }
-
     }
 
     SetupTourZooms() {
@@ -67,7 +65,8 @@ class TourGroup {
         if (this.parameters.TGP.zoom_type == 'linear') {
             let zoom_difference = this.parameters.TGP.zoom_upper_bound - this.parameters.TGP.zoom_lower_bound
             let zoom_step = zoom_difference / (this.parameters.TGP.tour_count - 1)
-            console.log(zoom_difference)
+            if(this.parameters.TGP.tour_count == 1) // divide by zero error when tour_count == 1 
+                zoom_step = 0
             for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                 this.tours[i].SetZoom(this.parameters.TGP.zoom_lower_bound + i * zoom_step)
             }
@@ -105,6 +104,15 @@ class TourGroup {
                 for(let i = 0; i < this.parameters.TGP.tour_count; i++)
                     this.tours[i].SetSeed(varied_seeds[i])
             }
+        }
+        if (this.parameters.TGP.seed_type == 'loaded'){
+            let loaded_seed = seed_machine.load_seed(this.parameters.TGP.seed_id)
+
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                this.tours[i].SetSeed(loaded_seed)
+
+            //[[-0.6466558, 0.12387177, -0.53947019, -0.69715325, 0.77943671, -0.79004337],
+            //[0.59591638, -0.0258686, -0.40476259, -0.62336581, -0.39510686, -0.13025707]],
         }
     }
 

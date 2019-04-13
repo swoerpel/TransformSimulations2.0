@@ -13,30 +13,31 @@ var general_parameters = {
 }
 
 var tour_group_parameters = {
-    tour_count: 12, // how many tours on the graphic
+    tour_count: 1, // how many tours on the graphic
     tour_width: 1200,
     tour_height: 200,
-    tour_placement: 'random', //'vertical', 'random'
+    tour_placement: 'horizontal', //'vertical', 'random'
     tour_placement_edge_buffer: {
         x: general_parameters.graphic_width * .25,
         y: general_parameters.graphic_width * .25
     }, //distance from border that a tour can be
-    seed_type: 'variation', //loaded variation random
+    seed_type: 'random', //loaded variation random
     start_seed: 'random',
-    transform_function_count: 2, //number of functions used per tour
+    seed_id : 'chet', //only used for loading seeds
+    transform_function_count: 20, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
-    tolerance: 0.01, // how large values in variation matrix can be
-    zoom_type: 'linear', // random    default = 2,2,2,2,2
-    zoom_upper_bound: 2,
-    zoom_lower_bound: 2,
+    tolerance: 0.1, // how large values in variation matrix can be
+    // zoom_type: 'linear', // random    default = 2,2,2,2,2
+    // zoom_upper_bound: 6,
+    // zoom_lower_bound: 1,
     points_per_draw: 10,
 
     stroke_weight: 1,
 
     zoom_type: 'linear', //scaled evenly between upper and lower bound
-    zoom_upper_bound: 4,
-    zoom_lower_bound: 4,
+    zoom_upper_bound: 3,
+    zoom_lower_bound: 3,
 
 }
 
