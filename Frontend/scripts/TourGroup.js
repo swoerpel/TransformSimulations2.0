@@ -3,7 +3,6 @@ class TourGroup {
         this.parameters = parameters
         this.tours = []
         this.CreateGraphic()
-
     }
 
     // creates and sets up graphics object for which all tours are placed
@@ -119,14 +118,47 @@ class TourGroup {
                 current_seed = seed_machine.load_seed(this.parameters.TGP.seed_id)
             }
             let variation_matrix = seed_machine.generate_random_variation_matrix()
-            console.log('variation matrix',variation_matrix)
             let varied_seeds = []
+            let variation_count_alignment_indexes = this.GenerateVariationCountIndexes()
             for(let i = 0; i < this.parameters.TGP.tour_count; i++)
-                varied_seeds.push(seed_machine.apply_variation_offset(current_seed,variation_matrix,i))
+                varied_seeds.push(seed_machine.apply_variation_offset(current_seed,variation_matrix,variation_count_alignment_indexes[i]))
+
             for(let i = 0; i < this.parameters.TGP.tour_count; i++)
                 this.tours[i].SetSeed(varied_seeds[i])
         }
 
+    }
+
+    GenerateVariationCountIndexes()
+    {
+        let indexes = []
+        if(this.parameters.TGP.variation_epoch == 'left')
+        {
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                indexes.push(i)
+            console.log('variation justify : ', 'left')
+
+        }
+        else if(this.parameters.TGP.variation_epoch == 'right')
+        {
+            for(let i = this.parameters.TGP.tour_count; i > 0; i--)
+                indexes.push(i)
+             console.log('variation justify : ', 'right')
+        }
+        else if(this.parameters.TGP.variation_epoch == 'center')
+        {
+            let base_index = Math.floor((this.parameters.TGP.tour_count - 1) / 2)
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                indexes.push(i - base_index)
+            console.log('variation justify : ', 'center')
+        }
+        else if(this.parameters.TGP.variation_epoch == 'random')
+        {
+
+            console.log('variation justify : ', 'random')
+        }
+        console.log('variation indexes', indexes)
+        return indexes
     }
 
     // translates each tour to its local origin

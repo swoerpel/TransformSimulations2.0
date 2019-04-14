@@ -46,8 +46,6 @@ class Tour {
 
     SetZoom(zoom) {
         this.zoom = zoom
-        console.log(this.tour_index, zoom)
-
     }
 
     DrawOrigin() {

@@ -7,13 +7,15 @@ var general_parameters = {
     graphic_width: 4000,
     graphic_height: 2400,
     draw_count: 50,
-    overlap_ratio: 0.5,
+    overlap_ratio: 0.25,
 
-    debug_draw_mode: true, //draws large origin points
+    function_type : 'static', // dynamic
+
+    debug_draw_mode: false, //draws large origin points
 }
 
 var tour_group_parameters = {
-    tour_count: 3, // how many tours on the graphic
+    tour_count: 7, // how many tours on the graphic
     tour_width: 1200,
     tour_height: 200,
     tour_placement: 'horizontal', //'vertical', 'random'
@@ -28,9 +30,7 @@ var tour_group_parameters = {
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
-    // zoom_type: 'linear', // random    default = 2,2,2,2,2
-    // zoom_upper_bound: 6,
-    // zoom_lower_bound: 1,
+    variation_epoch : 'center', //left right random, where the 0 offset seed is located for variations
     points_per_draw: 10,
 
     stroke_weight: 1,
