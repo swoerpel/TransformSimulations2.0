@@ -4,18 +4,18 @@ var general_parameters = {
     // 'batch' will save large groups of images without displaying them in the HTML
     // 'display' will display single tour groups with save option onscreen
     // display_mode : 'display', 
-    graphic_width: 4000,
-    graphic_height: 2400,
+    graphic_width: 6000,
+    graphic_height: 3200,
     draw_count: 50,
-    overlap_ratio: 0.5,
+    overlap_ratio: 0.25,
 
     function_type: 'dynamic', // dynamic
 
-    debug_draw_mode: true, //draws large origin points
+    debug_draw_mode: false, //draws large origin points
 }
 
 var tour_group_parameters = {
-    tour_count: 1, // how many tours on the graphic
+    tour_count: 5, // how many tours on the graphic
     tour_width: 1200,
     tour_height: 200,
     tour_placement: 'horizontal', //'vertical', 'random'
