@@ -1,12 +1,13 @@
 var T;
 var draw_count = 0;
 function preload() {
-    getUserAsync = async (name) => {
-        let response = await fetch(`http://localhost:3000/tour`);
-        let data = await response.json()
-        return data;
-    }
 
+
+}
+
+function SaveTourGroup() {
+    let seed_api = new SeedAPI()
+    seed_api.SaveTourGroup(T.GetTourGroup())
 }
 
 function setup() {

@@ -12,8 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://localhost:27017/transform-simulations', { useNewUrlParser: true, useCreateIndex: true });
 
 var Tour = mongoose.model('Tour', {
-  name: { type: String, index: { unique: true } },
-  points: [{ x: Number, y: Number }],
+  name: String,
+  seed: [[Number, Number, Number, Number, Number, Number],
+  [Number, Number, Number, Number, Number, Number]],
 });
 
 app.get('/', (req, res) => {

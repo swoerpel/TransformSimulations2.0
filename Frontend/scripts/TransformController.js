@@ -2,6 +2,7 @@
 
 class TransformController {
     constructor(parameters) {
+
         this.parameters = parameters
         this.tour_groups = []
 
@@ -19,6 +20,9 @@ class TransformController {
 
     }
 
+    GetTourGroup() {
+        return this.tour_groups[0].GetTourGroup()
+    }
 
 
     DrawTourGroup() {

@@ -217,4 +217,10 @@ class TourGroup {
     GetGraphic() {
         return this.graphic
     }
+
+    GetTourGroup() {
+        return this.tours
+    }
+
+
 }
