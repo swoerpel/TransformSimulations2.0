@@ -14,7 +14,6 @@ class Tour {
 
 
     SetSeed(seed_group) {
-        console.log('seed ', seed_group)
         this.seed_group = seed_group
         this.transform_functions = []
         for (let i = 0; i < this.seed_group.length; i++) {

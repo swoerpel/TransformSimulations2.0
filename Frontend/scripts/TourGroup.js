@@ -63,14 +63,21 @@ class TourGroup {
 
     // loads colors based on color parameters
     SetupTourColors() {
-        // currently not working due to chroma-js include issue
-        let chet = new ColorMachine()
+        let color_machine = new ColorMachine(this.parameters)
         if (this.parameters.CP.fill_type == 'constant') {
-            if (this.parameters.CP.color_choice == 'random') {
+            if (this.parameters.CP.fill_color_choice == 'list') {
                 for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                     let keys = Object.keys(colors);
                     this.tours[i].SetFillColor(colors[keys[i % keys.length]])
                 }
+            }
+            else if (this.parameters.CP.fill_color_choice == 'palette') {
+                let color_palette = color_machine.GetRandomPalette()
+                console.log('colors used', color_palette)
+                this.tours.map((t, index) => t.SetFillColor(color_palette[index]))
+                // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                //     this.tours[i].SetFillColor(color_palette[i])
+                // }
             }
         }
     }
@@ -134,29 +141,34 @@ class TourGroup {
         let indexes = []
         if(this.parameters.TGP.variation_epoch == 'left')
         {
+            // return [...Array(this.parameters.TGP.tour_count).keys()] // one line solution
             for(let i = 0; i < this.parameters.TGP.tour_count; i++)
                 indexes.push(i)
-            console.log('variation justify : ', 'left')
-
         }
         else if(this.parameters.TGP.variation_epoch == 'right')
         {
             for(let i = this.parameters.TGP.tour_count; i > 0; i--)
                 indexes.push(i)
-             console.log('variation justify : ', 'right')
         }
         else if(this.parameters.TGP.variation_epoch == 'center')
         {
             let base_index = Math.floor((this.parameters.TGP.tour_count - 1) / 2)
             for(let i = 0; i < this.parameters.TGP.tour_count; i++)
                 indexes.push(i - base_index)
-            console.log('variation justify : ', 'center')
         }
         else if(this.parameters.TGP.variation_epoch == 'random')
         {
-
-            console.log('variation justify : ', 'random')
+            let index_bucket = []
+            let base_index = Math.floor((this.parameters.TGP.tour_count - 1) / 2)
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+                index_bucket.push(i - base_index)
+            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+            {
+                let random_index = Math.floor(Math.random() * this.parameters.TGP.tour_count - i)
+                indexes.push(index_bucket.splice(random_index,1)[0])
+            }
         }
+        console.log('variation justify : ',this.parameters.TGP.variation_epoch)
         console.log('variation indexes', indexes)
         return indexes
     }
