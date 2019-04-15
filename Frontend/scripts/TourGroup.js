@@ -133,8 +133,8 @@ class TourGroup {
             for (let i = 0; i < this.parameters.TGP.tour_count; i++)
                 this.tours[i].SetSeed(varied_seeds[i])
         }
-
     }
+
 
     GenerateVariationCountIndexes() {
         let indexes = []
@@ -167,12 +167,47 @@ class TourGroup {
         return indexes
     }
 
+
+    SetupTourFunctions() {
+        if (this.parameters.GP.function_type == 'static') {
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                let current_transform_functions = []
+                let current_seed_group = this.tours[i].GetSeedGroup()
+                for (let j = 0; j < current_seed_group.length; j++) {
+                    current_transform_functions.push((x, y) => {
+                        return {
+                            x: current_seed_group[j][0] * x + current_seed_group[j][1] * y + current_seed_group[j][4],
+                            y: current_seed_group[j][2] * x + current_seed_group[j][3] * y + current_seed_group[j][5]
+                        }
+                    });
+                }
+                this.tours[i].SetFunctions(current_transform_functions)
+            }
+        }
+        else if (this.parameters.GP.function_type == 'dynamic') {
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                let current_transform_functions = []
+                let current_seed_group = this.tours[i].GetSeedGroup()
+                for (let j = 0; j < current_seed_group.length; j++) {
+                    current_transform_functions.push((x, y, t) => {
+                        return {
+                            x: x * (1 - x) * t,
+                            y: x * t * y
+                        }
+                    });
+                }
+                this.tours[i].SetFunctions(current_transform_functions)
+            }
+        }
+    }
+
     // translates each tour to its local origin
     // calls draw on that tour a set amount of times
     // translates back to global origin for next tour
     DrawTours() {
         for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
             this.tours[i].TranslateOrigin()
+            this.tours[i].IncStep()
             for (let j = 0; j < this.parameters.TGP.points_per_draw; j++)
                 this.tours[i].Draw()
             this.tours[i].TranslateOrigin()

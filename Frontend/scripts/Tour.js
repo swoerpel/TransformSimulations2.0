@@ -17,21 +17,17 @@ class Tour {
     SetSeed(seed_group) {
         this.seed_group = seed_group
         console.log('seed ', this.tour_index, seed_group)
-        this.parameters.GP.function_type == 'static' ?
-            this.SetStaticFunctions() :
-            this.SetDynamicFunctions()
+        // this.parameters.GP.function_type == 'static' ?
+        //     this.SetStaticFunctions() :
+        //     this.SetDynamicFunctions()
     }
 
-    SetStaticFunctions() {
-        this.transform_functions = []
-        for (let i = 0; i < this.seed_group.length; i++) {
-            this.transform_functions.push((x, y) => {
-                return {
-                    x: this.seed_group[i][0] * x * this.step + this.seed_group[i][1] * y + this.seed_group[i][4],
-                    y: this.seed_group[i][2] * x + this.seed_group[i][3] * y + this.seed_group[i][5]
-                }
-            });
-        }
+    GetSeedGroup() {
+        return this.seed_group
+    }
+
+    SetFunctions(transform_functions) {
+        this.transform_functions = transform_functions
     }
 
     SetDynamicFunctions() {
@@ -84,7 +80,13 @@ class Tour {
         }
         this.NextPoint()
         this.DrawPoint()
-        this.step += 0.00001
+
+    }
+
+
+    // remove later
+    IncStep() {
+        this.step += 0.001
     }
 
     NextPoint() {
@@ -95,7 +97,9 @@ class Tour {
         for (let i = 0; i < this.transform_functions.length; i++) {
             sum += function_prob
             if (sum > prob) {
-                nextPoint = this.transform_functions[i](this.x, this.y)
+                this.parameters.GP.function_type == 'static' ?
+                    nextPoint = this.transform_functions[i](this.x, this.y) :
+                    nextPoint = this.transform_functions[i](this.x, this.y, this.step)
                 this.x = nextPoint.x
                 this.y = nextPoint.y
                 break;
