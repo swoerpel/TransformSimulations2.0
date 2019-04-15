@@ -191,8 +191,8 @@ class TourGroup {
                 for (let j = 0; j < current_seed_group.length; j++) {
                     current_transform_functions.push((x, y, t) => {
                         return {
-                            x: x * (1 - x) * t,
-                            y: x * t * y
+                            x: 2 * Math.sin(x + t),
+                            y: 2 * Math.sin(y * x * current_seed_group[j][0] - t)
                         }
                     });
                 }
