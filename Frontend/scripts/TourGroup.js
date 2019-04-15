@@ -88,7 +88,7 @@ class TourGroup {
         if (this.parameters.TGP.zoom_type == 'linear') {
             let zoom_difference = this.parameters.TGP.zoom_upper_bound - this.parameters.TGP.zoom_lower_bound
             let zoom_step = zoom_difference / (this.parameters.TGP.tour_count - 1)
-            if(this.parameters.TGP.tour_count == 1) // divide by zero error when tour_count == 1 
+            if (this.parameters.TGP.tour_count == 1) // divide by zero error when tour_count == 1 
                 zoom_step = 0
             for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                 this.tours[i].SetZoom(this.parameters.TGP.zoom_lower_bound + i * zoom_step)
@@ -113,13 +113,13 @@ class TourGroup {
         if (this.parameters.TGP.seed_type == 'random') {
 
             for (let i = 0; i < this.parameters.TGP.tour_count; i++)
-                this.tours[i].SetSeed(seed_machine.generate_random_simple_seed())
+                this.tours[i].SetSeed(seed_machine.generate_random_simple_static_seed())
             // this.tours.map((index,T)=>console.log(index,T.seed))
         }
         if (this.parameters.TGP.seed_type == 'variation') {
             let current_seed;
             if (this.parameters.TGP.start_seed == 'random') {
-                current_seed = seed_machine.generate_random_simple_seed()
+                current_seed = seed_machine.generate_random_simple_static_seed()
             }
             else if (this.parameters.TGP.start_seed == 'loaded') {
                 current_seed = seed_machine.load_seed(this.parameters.TGP.seed_id)
@@ -127,48 +127,42 @@ class TourGroup {
             let variation_matrix = seed_machine.generate_random_variation_matrix()
             let varied_seeds = []
             let variation_count_alignment_indexes = this.GenerateVariationCountIndexes()
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
-                varied_seeds.push(seed_machine.apply_variation_offset(current_seed,variation_matrix,variation_count_alignment_indexes[i]))
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
+                varied_seeds.push(seed_machine.apply_variation_offset(current_seed, variation_matrix, variation_count_alignment_indexes[i]))
 
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
                 this.tours[i].SetSeed(varied_seeds[i])
         }
 
     }
 
-    GenerateVariationCountIndexes()
-    {
+    GenerateVariationCountIndexes() {
         let indexes = []
-        if(this.parameters.TGP.variation_epoch == 'left')
-        {
+        if (this.parameters.TGP.variation_epoch == 'left') {
             // return [...Array(this.parameters.TGP.tour_count).keys()] // one line solution
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
                 indexes.push(i)
         }
-        else if(this.parameters.TGP.variation_epoch == 'right')
-        {
-            for(let i = this.parameters.TGP.tour_count; i > 0; i--)
+        else if (this.parameters.TGP.variation_epoch == 'right') {
+            for (let i = this.parameters.TGP.tour_count; i > 0; i--)
                 indexes.push(i)
         }
-        else if(this.parameters.TGP.variation_epoch == 'center')
-        {
+        else if (this.parameters.TGP.variation_epoch == 'center') {
             let base_index = Math.floor((this.parameters.TGP.tour_count - 1) / 2)
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
                 indexes.push(i - base_index)
         }
-        else if(this.parameters.TGP.variation_epoch == 'random')
-        {
+        else if (this.parameters.TGP.variation_epoch == 'random') {
             let index_bucket = []
             let base_index = Math.floor((this.parameters.TGP.tour_count - 1) / 2)
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
                 index_bucket.push(i - base_index)
-            for(let i = 0; i < this.parameters.TGP.tour_count; i++)
-            {
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                 let random_index = Math.floor(Math.random() * this.parameters.TGP.tour_count - i)
-                indexes.push(index_bucket.splice(random_index,1)[0])
+                indexes.push(index_bucket.splice(random_index, 1)[0])
             }
         }
-        console.log('variation justify : ',this.parameters.TGP.variation_epoch)
+        console.log('variation justify : ', this.parameters.TGP.variation_epoch)
         console.log('variation indexes', indexes)
         return indexes
     }

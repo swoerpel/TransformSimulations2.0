@@ -6,6 +6,7 @@ class Tour {
         this.parameters = parameters
         this.x = 0
         this.y = 0
+        this.step = 0
         // this.SetSeedGroup = this.SetSeedGroup.bind(this)
         this.SetGraphic = this.SetGraphic.bind(this)
         this.debug_draw_mode = true
@@ -15,15 +16,26 @@ class Tour {
 
     SetSeed(seed_group) {
         this.seed_group = seed_group
+        console.log('seed ', this.tour_index, seed_group)
+        this.parameters.GP.function_type == 'static' ?
+            this.SetStaticFunctions() :
+            this.SetDynamicFunctions()
+    }
+
+    SetStaticFunctions() {
         this.transform_functions = []
         for (let i = 0; i < this.seed_group.length; i++) {
             this.transform_functions.push((x, y) => {
                 return {
-                    x: this.seed_group[i][0] * x + this.seed_group[i][1] * y + this.seed_group[i][4],
+                    x: this.seed_group[i][0] * x * this.step + this.seed_group[i][1] * y + this.seed_group[i][4],
                     y: this.seed_group[i][2] * x + this.seed_group[i][3] * y + this.seed_group[i][5]
                 }
             });
         }
+    }
+
+    SetDynamicFunctions() {
+
     }
 
 
@@ -72,6 +84,7 @@ class Tour {
         }
         this.NextPoint()
         this.DrawPoint()
+        this.step += 0.00001
     }
 
     NextPoint() {
