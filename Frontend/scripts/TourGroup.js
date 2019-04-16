@@ -97,7 +97,6 @@ class TourGroup {
         else if (this.parameters.TGP.zoom_type == 'random') {
 
         }
-
     }
 
 
@@ -191,8 +190,10 @@ class TourGroup {
                 for (let j = 0; j < current_seed_group.length; j++) {
                     current_transform_functions.push((x, y, t) => {
                         return {
-                            x: 2 * Math.sin(x * current_seed_group[j][1] + t),
-                            y: 2 * Math.sin(y * x * current_seed_group[j][0] - t)
+                            x: x+t,
+                            y: t
+                            // x: 2 * Math.sin(x * current_seed_group[j][1] + t),
+                            // y: 2 * Math.tan(y * x * current_seed_group[j][0] - t)
                         }
                     });
                 }

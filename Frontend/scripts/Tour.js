@@ -86,7 +86,7 @@ class Tour {
 
     // remove later
     IncStep() {
-        this.step += 0.001
+        this.step += 0.005
     }
 
     NextPoint() {
