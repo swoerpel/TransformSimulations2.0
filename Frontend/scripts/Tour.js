@@ -30,11 +30,11 @@ class Tour {
         this.transform_functions = transform_functions
     }
 
-    SetDynamicFunctions() {
-
+    SetTimeStep(time_step)
+    {
+        this.time_step = time_step
+        console.log('time_step: tour ', this.tour_index, this.time_step)
     }
-
-
 
     SetGraphic(graphic) {
         this.graphic = graphic
@@ -86,7 +86,8 @@ class Tour {
 
     // remove later
     IncStep() {
-        this.step += 0.005
+        this.step += this.time_step
+        this.graphic.strokeWeight(this.step + 1)
     }
 
     NextPoint() {

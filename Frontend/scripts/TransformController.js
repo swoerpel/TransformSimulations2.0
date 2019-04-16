@@ -16,6 +16,7 @@ class TransformController {
         tour_group.SetupTourFunctions()
         tour_group.SetupTourColors()
         tour_group.SetupTourZooms()
+        tour_group.SetupTimeSteps()
         this.tour_groups.push(tour_group)
 
     }

@@ -99,6 +99,23 @@ class TourGroup {
         }
     }
 
+    SetupTimeSteps()
+    {
+        // scaled evenly between upper and lower bound
+        if (this.parameters.TGP.time_step_type == 'linear') {
+            let time_step_difference = this.parameters.TGP.time_step_upper_bound - this.parameters.TGP.time_step_lower_bound
+            let time_step = time_step_difference / (this.parameters.TGP.tour_count - 1)
+            if (this.parameters.TGP.tour_count == 1) // divide by zero error when tour_count == 1 
+                time_step = 0
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                this.tours[i].SetTimeStep(this.parameters.TGP.time_step_lower_bound + i * time_step)
+            }
+        }
+        else if (this.parameters.TGP.time_step_type == 'random') {
+
+        }
+    }
+
 
     // sets the seed of each tour based on parameters
     SetupTourSeeds() {
@@ -190,10 +207,10 @@ class TourGroup {
                 for (let j = 0; j < current_seed_group.length; j++) {
                     current_transform_functions.push((x, y, t) => {
                         return {
-                            x: x+t,
-                            y: t
-                            // x: 2 * Math.sin(x * current_seed_group[j][1] + t),
-                            // y: 2 * Math.tan(y * x * current_seed_group[j][0] - t)
+                            // x: x+t,
+                            // y: t
+                            x: 1 * Math.sin(y * t * current_seed_group[j][1]),
+                            y: 2 * Math.cos(x * t * current_seed_group[j][0])
                         }
                     });
                 }
