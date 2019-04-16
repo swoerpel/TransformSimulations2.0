@@ -9,7 +9,7 @@ var general_parameters = {
     draw_count: 50,
     overlap_ratio: 0.25,
 
-    function_type: 'dynamic', // dynamic
+    function_type: 'static', // dynamic
 
     debug_draw_mode: false, //draws large origin points
 }
@@ -20,13 +20,13 @@ var tour_group_parameters = {
     tour_height: 200,
     tour_placement: 'horizontal', //'vertical', 'random'
     tour_placement_edge_buffer: {
-        x: general_parameters.graphic_width * .25,
-        y: general_parameters.graphic_width * .25
+        x: general_parameters.graphic_width * .5,
+        y: general_parameters.graphic_width * .5
     }, //distance from border that a tour can be
     seed_type: 'variation', //loaded variation random
     start_seed: 'random', //loaded or random
     seed_id: 'chet_bois', //only used for loading seeds
-    transform_function_count: 1, //number of functions used per tour
+    transform_function_count: 2, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
