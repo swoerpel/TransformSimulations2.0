@@ -209,8 +209,8 @@ class TourGroup {
                         return {
                             // x: x+t,
                             // y: t
-                            x: 1 * Math.sin(y * t * current_seed_group[j][1]),
-                            y: 2 * Math.cos(x * t * current_seed_group[j][0])
+                            x: 1 * Math.sin(y * t * current_seed_group[j][1]) + Math.cos(x * t * current_seed_group[j][2]),
+                            y: 2 * Math.cos(x * t * current_seed_group[j][0]) + Math.sin(y * t * current_seed_group[j][3])
                         }
                     });
                 }

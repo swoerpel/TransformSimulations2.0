@@ -87,7 +87,8 @@ class Tour {
     // remove later
     IncStep() {
         this.step += this.time_step
-        this.graphic.strokeWeight(this.step + 1)
+        if(this.parameters.TGP.scale_strokeweight)
+            this.graphic.strokeWeight(this.step + 1)
     }
 
     NextPoint() {
@@ -110,7 +111,11 @@ class Tour {
     }
 
     DrawPoint() {
-        this.graphic.stroke(this.fill_color)
+        if(this.parameters.CP.time_change_option == 'brighten')
+            this.graphic.stroke(chroma(this.fill_color).brighten(this.step + 1))
+        else
+            this.graphic.stroke(this.fill_color)
+        
         this.graphic.point(
             map(this.x, -this.zoom, this.zoom, -this.parameters.GP.graphic_width / 2, this.parameters.GP.graphic_width / 2),
             map(this.y, -this.zoom, this.zoom, -this.parameters.GP.graphic_height / 2, this.parameters.GP.graphic_height / 2)

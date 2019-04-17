@@ -31,16 +31,17 @@ var tour_group_parameters = {
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
     variation_epoch: 'center', //left right random, where the 0 offset seed is located for variations
-    points_per_draw: 20,
+    points_per_draw: 40,
     stroke_weight: 1,
     zoom_type: 'linear', //scaled evenly between upper and lower bound
     zoom_upper_bound: 3,
     zoom_lower_bound: 3,
 
     time_step_type : 'linear',  //scaled evenly between upper and lower bound
-    time_step_upper_bound : 0.001,
-    time_step_lower_bound : 0.002,
+    time_step_upper_bound : 0.0001,
+    time_step_lower_bound : 0.0001,
 
+    scale_strokeweight : false,
 
 
 }
@@ -50,6 +51,7 @@ var color_parameters = {
     fill_color_choice: 'palette', // palette or list
     palette_start: '#fafa6e',
     palette_end: '#2A4858',
+    time_change_option : 'none'
 }
 
 var colors = {
