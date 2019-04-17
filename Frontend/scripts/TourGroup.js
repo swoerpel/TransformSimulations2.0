@@ -99,8 +99,7 @@ class TourGroup {
         }
     }
 
-    SetupTimeSteps()
-    {
+    SetupTimeSteps() {
         // scaled evenly between upper and lower bound
         if (this.parameters.TGP.time_step_type == 'linear') {
             let time_step_difference = this.parameters.TGP.time_step_upper_bound - this.parameters.TGP.time_step_lower_bound
@@ -201,20 +200,44 @@ class TourGroup {
             }
         }
         else if (this.parameters.GP.function_type == 'dynamic') {
-            for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
-                let current_transform_functions = []
-                let current_seed_group = this.tours[i].GetSeedGroup()
-                for (let j = 0; j < current_seed_group.length; j++) {
-                    current_transform_functions.push((x, y, t) => {
-                        return {
-                            // x: x+t,
-                            // y: t
-                            x: 1 * Math.sin(y * t * current_seed_group[j][1]) + Math.cos(x * t * current_seed_group[j][2]),
-                            y: 2 * Math.cos(x * t * current_seed_group[j][0]) + Math.sin(y * t * current_seed_group[j][3])
-                        }
-                    });
+            if (this.parameters.TGP.random_dynamic_function) {
+                let function_machine = new FunctionGenerator(this.parameters)
+                let const_configuration_x = function_machine.GenerateRandomFunctionConfiguration()
+                let const_configuration_y = function_machine.GenerateRandomFunctionConfiguration()
+                for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                    let current_transform_functions = []
+                    let current_seed_group = this.tours[i].GetSeedGroup()
+                    console.log('current seed group', current_seed_group)
+                    for (let j = 0; j < current_seed_group.length; j++) {
+                        let function_config_x = function_machine.GenerateFunctionConstantArray(const_configuration_x, current_seed_group[i])
+                        let function_config_y = function_machine.GenerateFunctionConstantArray(const_configuration_y, current_seed_group[i])
+                        console.log(function_config_x)
+                        console.log(function_config_y)
+                        let rand_function_x = function_machine.RandomFunction(function_config_x)
+                        let rand_function_y = function_machine.RandomFunction(function_config_y)
+                        let xy_function = (x, y, t) => ({
+                            x: Math.sin(rand_function_x(x, y, t)),
+                            y: Math.sin(rand_function_y(x, y, t)),
+                        })
+                        current_transform_functions.push(xy_function);
+                    }
+                    this.tours[i].SetFunctions(current_transform_functions)
                 }
-                this.tours[i].SetFunctions(current_transform_functions)
+            }
+            else { // hard coded, does not use FunctionGenerator.js
+                for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                    let current_transform_functions = []
+                    let current_seed_group = this.tours[i].GetSeedGroup()
+                    for (let j = 0; j < current_seed_group.length; j++) {
+                        current_transform_functions.push((x, y, t) => {
+                            return {
+                                x: 1 * Math.sin(y * t * current_seed_group[j][1]) + Math.cos(x * t * current_seed_group[j][2]),
+                                y: 2 * Math.cos(x * t * current_seed_group[j][0]) + Math.sin(y * t * current_seed_group[j][3])
+                            }
+                        });
+                    }
+                    this.tours[i].SetFunctions(current_transform_functions)
+                }
             }
         }
     }

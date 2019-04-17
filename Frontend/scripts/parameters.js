@@ -4,8 +4,8 @@ var general_parameters = {
     // 'batch' will save large groups of images without displaying them in the HTML
     // 'display' will display single tour groups with save option onscreen
     // display_mode : 'display', 
-    graphic_width: 4000,
-    graphic_height: 2400,
+    graphic_width: document.documentElement.scrollWidth,
+    graphic_height: document.documentElement.scrollHeight,
     draw_count: 50,
     overlap_ratio: 0.5,
 
@@ -26,7 +26,7 @@ var tour_group_parameters = {
     seed_type: 'variation', //loaded variation random
     start_seed: 'random', //loaded or random
     seed_id: 'chet_bois', //only used for loading seeds
-    transform_function_count: 1, //number of functions used per tour
+    transform_function_count: 3, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
@@ -37,12 +37,17 @@ var tour_group_parameters = {
     zoom_upper_bound: 3,
     zoom_lower_bound: 3,
 
-    time_step_type : 'linear',  //scaled evenly between upper and lower bound
-    time_step_upper_bound : 0.0001,
-    time_step_lower_bound : 0.0001,
+    time_step_type: 'linear',  //scaled evenly between upper and lower bound
+    time_step_upper_bound: 0.001,
+    time_step_lower_bound: 0.001,
 
-    scale_strokeweight : false,
+    scale_strokeweight: false,
 
+    random_dynamic_function: true, //uses FunctionGenerator.js to create a random f(x,y,t)
+
+    // refer to FunctionGenerator -> RandomFunction()
+    dynamic_function_component_count: 6, // how many nonzero values are used to create f(x,y,t) 
+    // less than 20
 
 }
 
@@ -51,7 +56,7 @@ var color_parameters = {
     fill_color_choice: 'palette', // palette or list
     palette_start: '#fafa6e',
     palette_end: '#2A4858',
-    time_change_option : 'none'
+    time_change_option: 'none'
 }
 
 var colors = {
