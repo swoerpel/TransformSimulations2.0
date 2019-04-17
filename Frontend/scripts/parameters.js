@@ -26,7 +26,7 @@ var tour_group_parameters = {
     seed_type: 'variation', //loaded variation random
     start_seed: 'random', //loaded or random
     seed_id: 'chet_bois', //only used for loading seeds
-    transform_function_count: 3, //number of functions used per tour
+    transform_function_count: 1, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
@@ -41,7 +41,7 @@ var tour_group_parameters = {
     time_step_upper_bound: 0.001,
     time_step_lower_bound: 0.001,
 
-    scale_strokeweight: false,
+    scale_strokeweight: true,
 
     random_dynamic_function: true, //uses FunctionGenerator.js to create a random f(x,y,t)
 

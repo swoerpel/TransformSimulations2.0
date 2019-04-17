@@ -43,14 +43,15 @@ class FunctionGenerator {
 
 
     GenerateFunctionConstantArray(configuration, constants) {
+        let config = configuration.slice()
         let constant_index = 0
-        for (let i = 0; i < configuration.length; i++) {
-            if (configuration[i] == 1) {
-                configuration[i] = constants[constant_index];
+        for (let i = 0; i < config.length; i++) {
+            if (config[i] != 0) {
+                config[i] = constants[constant_index];
                 constant_index++
             }
         }
-        return configuration
+        return config
     }
 
     RandomTrigFunction() {

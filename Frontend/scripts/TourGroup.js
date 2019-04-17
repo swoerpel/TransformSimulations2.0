@@ -202,22 +202,24 @@ class TourGroup {
         else if (this.parameters.GP.function_type == 'dynamic') {
             if (this.parameters.TGP.random_dynamic_function) {
                 let function_machine = new FunctionGenerator(this.parameters)
-                let const_configuration_x = function_machine.GenerateRandomFunctionConfiguration()
-                let const_configuration_y = function_machine.GenerateRandomFunctionConfiguration()
+                const const_configuration_x = function_machine.GenerateRandomFunctionConfiguration()
+                const const_configuration_y = function_machine.GenerateRandomFunctionConfiguration()
+                console.log('constx', const_configuration_x)
+                console.log('consty', const_configuration_y)
                 for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                     let current_transform_functions = []
                     let current_seed_group = this.tours[i].GetSeedGroup()
-                    console.log('current seed group', current_seed_group)
+                    // console.log('current seed group', current_seed_group)
                     for (let j = 0; j < current_seed_group.length; j++) {
-                        let function_config_x = function_machine.GenerateFunctionConstantArray(const_configuration_x, current_seed_group[i])
-                        let function_config_y = function_machine.GenerateFunctionConstantArray(const_configuration_y, current_seed_group[i])
-                        console.log(function_config_x)
-                        console.log(function_config_y)
+                        // console.log(current_seed_group[j])
+                        function_machine = new FunctionGenerator(this.parameters)
+                        let function_config_x = function_machine.GenerateFunctionConstantArray(const_configuration_x, current_seed_group[j])
+                        let function_config_y = function_machine.GenerateFunctionConstantArray(const_configuration_y, current_seed_group[j])
                         let rand_function_x = function_machine.RandomFunction(function_config_x)
                         let rand_function_y = function_machine.RandomFunction(function_config_y)
                         let xy_function = (x, y, t) => ({
-                            x: Math.sin(rand_function_x(x, y, t)),
-                            y: Math.sin(rand_function_y(x, y, t)),
+                            x: rand_function_x(x, y, t),
+                            y: rand_function_y(x, y, t),
                         })
                         current_transform_functions.push(xy_function);
                     }
