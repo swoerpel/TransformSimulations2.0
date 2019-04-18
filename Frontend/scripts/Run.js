@@ -31,3 +31,13 @@ function draw() {
     // if (draw_count > 100)
     // noLoop()
 }
+
+
+var saveImage = () => {
+    console.log('saving image')
+    let localURL = 'C:\\File\\Art\\transforms2.0\\'
+    let imageName = prompt("Please Enter an Image Name");
+    console.log('image name', imageName)
+    let graphic = T.GetGraphic()
+    save(graphic,localURL + imageName, 'png')
+}

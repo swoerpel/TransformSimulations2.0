@@ -9,13 +9,13 @@ var general_parameters = {
     draw_count: 50,
     overlap_ratio: 0.5,
 
-    function_type: 'dynamic', // dynamic
+    function_type: 'static', // dynamic
 
-    debug_draw_mode: false, //draws large origin points
+    debug_draw_mode: true, //draws large origin points
 }
 
 var tour_group_parameters = {
-    tour_count: 3, // how many tours on the graphic
+    tour_count: 5, // how many tours on the graphic
     tour_width: 1200,
     tour_height: 200,
     tour_placement: 'horizontal', //'vertical', 'random'
@@ -26,22 +26,22 @@ var tour_group_parameters = {
     seed_type: 'variation', //loaded variation random
     start_seed: 'random', //loaded or random
     seed_id: 'chet_bois', //only used for loading seeds
-    transform_function_count: 1, //number of functions used per tour
+    transform_function_count: 2, //number of functions used per tour
     scale: 1, //max abs value of parameters,
     precision: 8, //decimals saved when generating random seeds
     tolerance: 0.1, // how large values in variation matrix can be
     variation_epoch: 'center', //left right random, where the 0 offset seed is located for variations
-    points_per_draw: 40,
+    points_per_draw: 20,
     stroke_weight: 1,
     zoom_type: 'linear', //scaled evenly between upper and lower bound
-    zoom_upper_bound: 3,
-    zoom_lower_bound: 3,
+    zoom_upper_bound: 2,
+    zoom_lower_bound: 2,
 
     time_step_type: 'linear',  //scaled evenly between upper and lower bound
     time_step_upper_bound: 0.001,
     time_step_lower_bound: 0.001,
 
-    scale_strokeweight: true,
+    scale_strokeweight: false,
 
     random_dynamic_function: true, //uses FunctionGenerator.js to create a random f(x,y,t)
 
@@ -82,3 +82,5 @@ var parameters = {
 
 
 
+
+ 

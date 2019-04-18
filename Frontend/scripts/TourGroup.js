@@ -219,7 +219,7 @@ class TourGroup {
                         let rand_function_y = function_machine.RandomFunction(function_config_y)
                         let xy_function = (x, y, t) => ({
                             x: rand_function_x(x, y, t),
-                            y: rand_function_y(x, y, t),
+                            y: Math.sin(rand_function_y(x, y, t)),
                         })
                         current_transform_functions.push(xy_function);
                     }

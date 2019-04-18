@@ -12,14 +12,12 @@ class FunctionGenerator {
         let c = constants
         console.log(c)
         return (x, y, t) => {
-
             return (c[0] * x) + (c[1] * y) + (c[2] * t) +
                 (c[3] * x * x) + (c[4] * y * y) + (c[5] * t * t) +
                 (c[6] * x * y) + (c[7] * x * t) + (c[8] * y * t) +
                 (c[9] * x * x * x) + (c[10] * y * y * y) + (c[11] * t * t * t) +
                 (c[12] * x * x * y) + (c[13] * x * y * y) + (c[14] * x * x * t) +
                 (c[15] * x * t * t) + (c[16] * y * y * t) + (c[17] * y * t * t) + (c[18] * x * y * t) + c[19]
-
         }
     }
 
@@ -39,8 +37,6 @@ class FunctionGenerator {
         }
         return config
     }
-
-
 
     GenerateFunctionConstantArray(configuration, constants) {
         let config = configuration.slice()
