@@ -215,11 +215,13 @@ class TourGroup {
                         function_machine = new FunctionGenerator(this.parameters)
                         let function_config_x = function_machine.GenerateFunctionConstantArray(const_configuration_x, current_seed_group[j])
                         let function_config_y = function_machine.GenerateFunctionConstantArray(const_configuration_y, current_seed_group[j])
-                        let rand_function_x = function_machine.RandomFunction(function_config_x)
-                        let rand_function_y = function_machine.RandomFunction(function_config_y)
+                        let rand_function_x = function_machine.RandomTrigFunction(function_config_x)
+                        let rand_function_y = function_machine.RandomTrigFunction(function_config_y)
+                        // let rand_function_x = function_machine.RandomFunction(function_config_x)
+                        // let rand_function_y = function_machine.RandomFunction(function_config_y)
                         let xy_function = (x, y, t) => ({
                             x: rand_function_x(x, y, t),
-                            y: Math.sin(rand_function_y(x, y, t)),
+                            y: rand_function_y(x, y, t),
                         })
                         current_transform_functions.push(xy_function);
                     }

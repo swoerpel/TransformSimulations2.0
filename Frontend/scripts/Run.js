@@ -39,5 +39,5 @@ var saveImage = () => {
     let imageName = prompt("Please Enter an Image Name");
     console.log('image name', imageName)
     let graphic = T.GetGraphic()
-    save(graphic,localURL + imageName, 'png')
+    save(graphic,imageName, 'png')
 }
