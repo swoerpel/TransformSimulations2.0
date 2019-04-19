@@ -74,11 +74,21 @@ class TourGroup {
             else if (this.parameters.CP.fill_color_choice == 'palette') {
                 let color_palette = color_machine.GetRandomPalette()
                 console.log('colors used', color_palette)
-                this.tours.map((t, index) => t.SetFillColor(color_palette[index]))
+                this.tours.map((t, index) => t.SetFillColor(color_palette,index))
                 // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                 //     this.tours[i].SetFillColor(color_palette[i])
                 // }
             }
+
+        }
+        else if (this.parameters.CP.fill_type == 'dynamic') {
+            let color_palette = color_machine.GetRandomPalette()
+            // console.log('colors used', color_palette)
+            this.tours.map((t, index) => t.SetFillColor(color_palette,index))
+            // this.tours.map((t, index) => t.SetFillColor(color_palette[index]))
+            // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+            //     this.tours[i].SetFillColor(color_palette[i])
+            // }
         }
     }
 

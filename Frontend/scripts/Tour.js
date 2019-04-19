@@ -46,8 +46,26 @@ class Tour {
 
     }
 
-    SetFillColor(fill_color) {
-        this.fill_color = fill_color
+    SetFillColor(pallete, index) {
+        if(this.parameters.CP.fill_type == 'constant')
+        {
+            this.interpolate = chroma.scale([this.parameters.CP.palette_start,this.parameters.CP.palette_end]).mode('hsl');
+            console.log(this.interpolate(0.5))
+            console.log(this.interpolate(0.5).hex())
+
+            this.fill_color = pallete[index]
+        }
+        else if(this.parameters.CP.fill_type == 'dynamic')
+        {
+            this.fill_color = '#FFFFFF'
+            console.log('colors')
+            console.log(this.parameters.CP.palette_start)
+            console.log(this.parameters.CP.palette_end)
+            // this.interpolate = chroma.scale([this.parameters.CP.palette_start,this.parameters.CP.palette_end]).mode('hsl');
+            // this.interpolate = chroma.scale('Spectral');
+            this.interpolate = chroma.scale([chroma.random(), chroma.random()])
+            
+        }
 
     }
 
@@ -89,6 +107,7 @@ class Tour {
         this.step += this.time_step
         if(this.parameters.TGP.scale_strokeweight)
             this.graphic.strokeWeight(this.step + 1)
+        this.graphic.strokeWeight(4* Math.sin(this.step))
     }
 
     NextPoint() {
@@ -111,8 +130,10 @@ class Tour {
     }
 
     DrawPoint() {
-        if(this.parameters.CP.time_change_option == 'brighten')
-            this.graphic.stroke(chroma(this.fill_color).brighten(this.step + 1))
+        if(this.parameters.CP.fill_type == 'dynamic')
+        {
+            this.graphic.stroke(this.interpolate(this.step / 5).hex())
+        }
         else
             this.graphic.stroke(this.fill_color)
         
