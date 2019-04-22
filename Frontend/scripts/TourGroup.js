@@ -64,15 +64,23 @@ class TourGroup {
     // loads colors based on color parameters
     SetupTourColors() {
         let color_machine = new ColorMachine(this.parameters)
-        if (this.parameters.CP.fill_type == 'constant') {
-            if (this.parameters.CP.fill_color_choice == 'list') {
+        if (this.parameters.CP.general_fill_type == 'constant') {
+            if (this.parameters.CP.constant_fill_type == 'list') {
                 for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
                     let keys = Object.keys(colors);
                     this.tours[i].SetFillColor(colors[keys[i % keys.length]])
                 }
             }
-            else if (this.parameters.CP.fill_color_choice == 'palette') {
-                let color_palette = color_machine.GetRandomPalette()
+            else if (this.parameters.CP.constant_fill_type == 'palette') {
+                let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
+                console.log('colors used', color_palette)
+                this.tours.map((t, index) => t.SetFillColor(color_palette,index))
+                // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                //     this.tours[i].SetFillColor(color_palette[i])
+                // }
+            }
+            else if (this.parameters.CP.constant_fill_type == 'by_function') {
+                let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.transform_function_count)
                 console.log('colors used', color_palette)
                 this.tours.map((t, index) => t.SetFillColor(color_palette,index))
                 // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
@@ -81,8 +89,8 @@ class TourGroup {
             }
 
         }
-        else if (this.parameters.CP.fill_type == 'dynamic') {
-            let color_palette = color_machine.GetRandomPalette()
+        else if (this.parameters.CP.general_fill_type == 'dynamic') {
+            let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
             // console.log('colors used', color_palette)
             this.tours.map((t, index) => t.SetFillColor(color_palette,index))
             // this.tours.map((t, index) => t.SetFillColor(color_palette[index]))

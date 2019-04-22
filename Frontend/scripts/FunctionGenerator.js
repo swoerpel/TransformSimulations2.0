@@ -4,7 +4,7 @@ class FunctionGenerator {
 
     constructor(parameters) {
         this.parameters = parameters
-        this.total_function_components = 8// 0 -> 18
+        this.total_function_components = 12// 0 -> 18
     }
 
 
@@ -26,7 +26,9 @@ class FunctionGenerator {
         console.log(c)
         return (x, y, t) => {
             return (c[0]*Math.cos(y + t)) + (c[1]*Math.cos(x + t)) + (c[2]*Math.sin(x + t)) + (c[3]*Math.sin(y + t)) +
-                    (c[4]*Math.cos(y*x + t)) + (c[5]*Math.cos(x*t + t)) + (c[6]*Math.sin(x*y + t)) + (c[7]*Math.sin(y*t + t))
+                    (c[4]*Math.cos(y*x + t)) + (c[5]*Math.cos(x*t + t)) + (c[6]*Math.sin(x*y + t)) + (c[7]*Math.sin(y*t + t)) +
+                    (c[8]*Math.abs(Math.cos(y*x + t))) + (c[9]*Math.abs(Math.cos(x*t + t))) + (c[10]*Math.abs(Math.sin(x*y + t))) + (c[11]*Math.abs(Math.sin(y*t + t)))
+
             // return (c[0]*Math.sin(x)) + (c[1]*Math.sin(y)) + (c[2]*Math.sin(t)) + (c[3]*Math.sin(x*y)) + (c[4]*Math.sin(x*t)) + 
             //        (c[5]*Math.cos(x)) + (c[6]*Math.cos(y)) + (c[7]*Math.cos(t)) + (c[8]*Math.cos(x*y)) + (c[9]*Math.cos(x*t)) + 
             //        (c[10]*Math.cos(y + t)) + (c[11]*Math.cos(x + t)) + (c[10]*Math.sin(x + t)) + (c[11]*Math.sin(y + t))
