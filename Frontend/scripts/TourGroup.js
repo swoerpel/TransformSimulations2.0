@@ -64,41 +64,115 @@ class TourGroup {
     // loads colors based on color parameters
     SetupTourColors() {
         let color_machine = new ColorMachine(this.parameters)
-        if (this.parameters.CP.general_fill_type == 'constant') {
-            if (this.parameters.CP.constant_fill_type == 'list') {
-                for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
-                    let keys = Object.keys(colors);
-                    this.tours[i].SetFillColor(colors[keys[i % keys.length]])
+
+        if (this.parameters.GP.function_type == 'static') {
+            if (this.parameters.CP.fill_type == 'constant') {
+                if (this.parameters.CP.color_choice == 'loaded') {
+                    console.log('static constant loaded colors')
+                    for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                        let keys = Object.keys(colors);
+                        this.tours[i].SetFillColor(Object.values(colors), i % keys.length)
+
+                    }
+                }
+                else {
+                    let random_colors = color_machine.GetRandomColors(this.parameters.TGP.tour_count)
+                    console.log('static constant random colors')
+                    console.log(random_colors)
+                    for (let i = 0; i < this.parameters.TGP.tour_count; i++)
+                        this.tours[i].SetFillColor(random_colors, i)
                 }
             }
-            else if (this.parameters.CP.constant_fill_type == 'palette') {
-                let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
-                console.log('colors used', color_palette)
-                this.tours.map((t, index) => t.SetFillColor(color_palette,index))
-                // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
-                //     this.tours[i].SetFillColor(color_palette[i])
-                // }
+            else if (this.parameters.CP.fill_type == 'palette per tour') {
+                let color_palette = []
+                this.parameters.CP.color_choice == 'loaded' ?
+                    color_palette = color_machine.GetLoadedPalette(this.parameters.TGP.tour_count) :
+                    color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
+                console.log('static palette per tour colors')
+                console.log(color_palette)
+                for (let i = 0; i < this.parameters.TGP.tour_count; i++)
+                    this.tours[i].SetFillColor(color_palette, i)
             }
-            else if (this.parameters.CP.constant_fill_type == 'by_function') {
-                let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.transform_function_count)
-                console.log('colors used', color_palette)
-                this.tours.map((t, index) => t.SetFillColor(color_palette,index))
-                // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
-                //     this.tours[i].SetFillColor(color_palette[i])
-                // }
+            else if (this.parameters.CP.fill_type == 'palette per function') {
+                let color_palettes = []
+                for (let i = 0; i < this.parameters.TGP.transform_function_count; i++) {
+                    color_palettes.push(color_machine.GetRandomPalette(this.parameters.TGP.tour_count))
+                }
+                console.log('palette per function random colors', color_palettes)
+                for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                    let tour_palette = []
+                    for (let j = 0; j < this.parameters.TGP.transform_function_count; j++)
+                        tour_palette.push(color_palettes[j][i])
+                    console.log(tour_palette)
+                    this.tours[i].SetFillColor(tour_palette, i)
+                }
             }
 
         }
-        else if (this.parameters.CP.general_fill_type == 'dynamic') {
-            let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
-            // console.log('colors used', color_palette)
-            this.tours.map((t, index) => t.SetFillColor(color_palette,index))
-            // this.tours.map((t, index) => t.SetFillColor(color_palette[index]))
-            // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
-            //     this.tours[i].SetFillColor(color_palette[i])
-            // }
+        else if (this.parameters.GP.function_type == 'dynamic') {
+            if (this.parameters.CP.fill_type == 'constant') {
+
+            }
+            else if (this.parameters.CP.fill_type == 'palette per tour') {
+
+            }
+            else if (this.parameters.CP.fill_type == 'palettes over time') {
+
+            }
+            else if (this.parameters.CP.fill_type == 'palette per function over time') {
+
+            }
+            else {
+                let random_colors = color_machine.GetRandomColors(this.parameters.TGP.tour_count)
+                for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+                    this.tours[i].SetFillColor(random_colors[i])
+                }
+            }
+        }
+
+    }
+
+
+    /*
+
+    if(this.parameters.CP.general_fill_type == 'constant') {
+    if (this.parameters.CP.constant_fill_type == 'list') {
+        for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+            let keys = Object.keys(colors);
+            this.tours[i].SetFillColor(colors[keys[i % keys.length]])
         }
     }
+    else if (this.parameters.CP.constant_fill_type == 'palette') {
+        let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
+        console.log('colors used', color_palette)
+        this.tours.map((t, index) => t.SetFillColor(color_palette, index))
+        // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+        //     this.tours[i].SetFillColor(color_palette[i])
+        // }
+    }
+    else if (this.parameters.CP.constant_fill_type == 'by_function') {
+        let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.transform_function_count)
+        console.log('colors used', color_palette)
+        this.tours.map((t, index) => t.SetFillColor(color_palette, index))
+        // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+        //     this.tours[i].SetFillColor(color_palette[i])
+        // }
+    }
+
+    }
+            else if (this.parameters.CP.general_fill_type == 'dynamic') {
+        let color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
+        // console.log('colors used', color_palette)
+        this.tours.map((t, index) => t.SetFillColor(color_palette, index))
+        // this.tours.map((t, index) => t.SetFillColor(color_palette[index]))
+        // for (let i = 0; i < this.parameters.TGP.tour_count; i++) {
+        //     this.tours[i].SetFillColor(color_palette[i])
+        // }
+        
+    }
+
+    }
+    */
 
     // sets zoom for each tour based on parameters
     SetupTourZooms() {

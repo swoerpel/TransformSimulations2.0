@@ -7,7 +7,8 @@ class Tour {
         this.x = 0
         this.y = 0
         this.step = 0
-        this.last_function = 0
+        this.last_function_index = 0
+        this.color_index = 0
         // this.SetSeedGroup = this.SetSeedGroup.bind(this)
         this.SetGraphic = this.SetGraphic.bind(this)
         this.debug_draw_mode = true
@@ -31,8 +32,7 @@ class Tour {
         this.transform_functions = transform_functions
     }
 
-    SetTimeStep(time_step)
-    {
+    SetTimeStep(time_step) {
         this.time_step = time_step
         console.log('time_step: tour ', this.tour_index, this.time_step)
     }
@@ -47,7 +47,27 @@ class Tour {
 
     }
 
-    SetFillColor(pallete, index) {
+    SetFillColor(palette, index) {
+        if (this.parameters.GP.function_type == 'static') {
+            if (this.parameters.CP.fill_type == 'constant') {
+                this.fill_colors = palette
+                this.color_index = index
+            }
+            else if (this.parameters.CP.fill_type == 'palette per tour') {
+                console.log(this.tour_index, palette[index])
+                this.fill_colors = palette
+                this.color_index = index
+            }
+            else if (this.parameters.CP.fill_type == 'palette per function') {
+                this.fill_colors = palette
+                console.log(this.fill_colors)
+            }
+        }
+        else if (this.parameters.GP.function_type == 'dynamic') {
+
+        }
+
+        /*
         if(this.parameters.CP.general_fill_type == 'constant')
         {
             //this.interpolate = chroma.scale([this.parameters.CP.palette_start,this.parameters.CP.palette_end]).mode('hsl');
@@ -76,6 +96,7 @@ class Tour {
             this.interpolate = chroma.scale(chroma.scale([chroma.random(),chroma.random()]).mode('lch').colors())
             
         }
+        */
 
     }
 
@@ -100,7 +121,7 @@ class Tour {
 
     Draw() {
         if (this.parameters.GP.debug_draw_mode && this.debug_draw_mode) {
-            this.graphic.stroke(this.fill_color)
+            this.graphic.stroke(this.fill_colors[this.color_index])
             this.graphic.strokeWeight(20)
             this.graphic.point(0, 0)
             this.graphic.strokeWeight(this.parameters.TGP.stroke_weight)
@@ -115,10 +136,10 @@ class Tour {
     // remove later
     IncStep() {
         this.step += this.time_step
-        if(this.parameters.TGP.stroke_weight_type == 'scale_up')
+        if (this.parameters.TGP.stroke_weight_type == 'scale_up')
             this.graphic.strokeWeight(this.step + 1)
-        else if(this.parameters.TGP.stroke_weight_type == 'oscillate')
-            this.graphic.strokeWeight(this.parameters.TGP.stroke_weight* Math.abs(Math.sin(this.step)))
+        else if (this.parameters.TGP.stroke_weight_type == 'oscillate')
+            this.graphic.strokeWeight(this.parameters.TGP.stroke_weight * Math.abs(Math.sin(this.step)))
     }
 
     NextPoint() {
@@ -134,7 +155,7 @@ class Tour {
                     nextPoint = this.transform_functions[i](this.x, this.y, this.step)
                 this.x = nextPoint.x
                 this.y = nextPoint.y
-                this.last_function = i
+                this.last_function_index = i
                 break;
             }
         }
@@ -142,18 +163,24 @@ class Tour {
     }
 
     DrawPoint() {
-        if(this.parameters.CP.general_fill_type == 'dynamic')
-        {
+        //this.graphic.stroke(this.fill_color)
+        // console.log(this.fill_colors)
+        if (this.parameters.CP.fill_type == 'palette per function') {
+            this.graphic.stroke(this.fill_colors[this.last_function_index])
+        }
+        else
+            this.graphic.stroke(this.fill_colors[this.color_index])
+        /*
+        if (this.parameters.CP.general_fill_type == 'dynamic') {
             this.graphic.stroke(this.interpolate(Math.sin(this.step * 10)).hex())
         }
-        else if(this.parameters.CP.general_fill_type == 'constant')
-        {
+        else if (this.parameters.CP.general_fill_type == 'constant') {
             this.graphic.stroke(this.pallete[this.last_function])
             // this.graphic.stroke(this.pallete[this.palletethis.last_function])
         }
         else
             this.graphic.stroke(this.fill_color)
-        
+        */
         this.graphic.point(
             map(this.x, -this.zoom, this.zoom, -this.parameters.GP.graphic_width / 2, this.parameters.GP.graphic_width / 2),
             map(this.y, -this.zoom, this.zoom, -this.parameters.GP.graphic_height / 2, this.parameters.GP.graphic_height / 2)
