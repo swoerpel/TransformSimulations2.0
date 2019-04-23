@@ -64,7 +64,7 @@ class Tour {
             }
         }
         else if (this.parameters.GP.function_type == 'dynamic') {
-
+            this.fill_colors = palette
         }
 
         /*

@@ -9,7 +9,7 @@ var general_parameters = {
     draw_count: 50,
     overlap_ratio: 0.5,
 
-    function_type: 'static', // dynamic
+    function_type: 'dynamic', // dynamic
 
     debug_draw_mode: true, //draws large origin points
 }
