@@ -124,7 +124,14 @@ class TourGroup {
 
         }
         else if (this.parameters.CP.fill_type == 'palette per tour') {
-
+            let color_palette = []
+            this.parameters.CP.color_choice == 'loaded' ?
+                color_palette = color_machine.GetLoadedPalette(this.parameters.TGP.tour_count) :
+                color_palette = color_machine.GetRandomPalette(this.parameters.TGP.tour_count)
+            console.log('dynamic palette per tour colors')
+            console.log(color_palette)
+            for (let i = 0; i < this.parameters.TGP.tour_count; i++)
+                this.tours[i].SetFillColor(color_palette, i)
         }
         else if (this.parameters.CP.fill_type == 'palettes over time') {
 
@@ -237,6 +244,7 @@ class TourGroup {
             }
             else if (this.parameters.TGP.start_seed == 'loaded') {
                 current_seed = seed_machine.load_seed(this.parameters.TGP.seed_id)
+                console.log('base seed', current_seed)
             }
             let variation_matrix = seed_machine.generate_random_variation_matrix()
             let varied_seeds = []
@@ -297,6 +305,7 @@ class TourGroup {
                 }
                 this.tours[i].SetFunctions(current_transform_functions)
             }
+            console.log('static tours set')
         }
         else if (this.parameters.GP.function_type == 'dynamic') {
             if (this.parameters.TGP.random_dynamic_function) {
@@ -334,8 +343,8 @@ class TourGroup {
                     for (let j = 0; j < current_seed_group.length; j++) {
                         current_transform_functions.push((x, y, t) => {
                             return {
-                                x: 1 * Math.sin(y * t * current_seed_group[j][1]) + Math.cos(x * t * current_seed_group[j][2]),
-                                y: 2 * Math.cos(x * t * current_seed_group[j][0]) + Math.sin(y * t * current_seed_group[j][3])
+                                x: t + y * 3 / (x * x + y * y + 1),
+                                y: -t * x / (x * x + y * y + 1)
                             }
                         });
                     }

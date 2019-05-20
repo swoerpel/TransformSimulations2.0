@@ -6,7 +6,7 @@ class Tour {
         this.parameters = parameters
         this.x = 0
         this.y = 0
-        this.step = 0
+        this.step = -3
         this.last_function_index = 0
         this.color_index = 0
         // this.SetSeedGroup = this.SetSeedGroup.bind(this)
@@ -30,6 +30,7 @@ class Tour {
 
     SetFunctions(transform_functions) {
         this.transform_functions = transform_functions
+        console.log('functions', this.transform_functions)
     }
 
     SetTimeStep(time_step) {
@@ -64,7 +65,10 @@ class Tour {
             }
         }
         else if (this.parameters.GP.function_type == 'dynamic') {
+            console.log('fill type dynamic')
             this.fill_colors = palette
+            this.graphic.stroke(palette[index])
+            console.log(this.fill_colors[index])
         }
 
         /*
@@ -150,6 +154,8 @@ class Tour {
         for (let i = 0; i < this.transform_functions.length; i++) {
             sum += function_prob
             if (sum > prob) {
+                // this.x = this.step
+                // this.y = this.step
                 this.parameters.GP.function_type == 'static' ?
                     nextPoint = this.transform_functions[i](this.x, this.y) :
                     nextPoint = this.transform_functions[i](this.x, this.y, this.step)
@@ -165,11 +171,13 @@ class Tour {
     DrawPoint() {
         //this.graphic.stroke(this.fill_color)
         // console.log(this.fill_colors)
-        if (this.parameters.CP.fill_type == 'palette per function') {
-            this.graphic.stroke(this.fill_colors[this.last_function_index])
+        if (this.parameters.GP.function_type == 'static') {
+            if (this.parameters.CP.fill_type == 'palette per function') {
+                this.graphic.stroke(this.fill_colors[this.last_function_index])
+            }
+            else
+                this.graphic.stroke(this.fill_colors[this.color_index])
         }
-        else
-            this.graphic.stroke(this.fill_colors[this.color_index])
         /*
         if (this.parameters.CP.general_fill_type == 'dynamic') {
             this.graphic.stroke(this.interpolate(Math.sin(this.step * 10)).hex())
